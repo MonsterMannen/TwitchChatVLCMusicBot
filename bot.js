@@ -2,9 +2,10 @@ const TwitchBot = require('twitch-bot')
 const youtube = require('youtube-finder');
 const child_process = require('child_process');
 const secret = require('./secret.js');
+const config = require('./config.js');
 
 // channel to monitor
-var channel = "monstermannen_";
+var channel = config.channel;
 
 // twitch bot client
 const Bot = new TwitchBot({
@@ -35,11 +36,11 @@ Bot.on('message', chatter => {
     else if(chatter.message.startsWith("!song")
                             || chatter.message.startsWith("!play")) {
         if(chatter.message.length <= 6){
-            say("You forgot to name a song LUL");
+            say(config.no_song_mentioned);
             return;
         }
         if(chatter.message.indexOf("rape") > -1){
-            say("No ear rape - banned LUL LUL");
+            say(config.ear_rape_song_requested);
             Bot.timeout(chatter.username, 10, "ear rape song");
             return;
         }
@@ -71,7 +72,7 @@ function playSong(searchString){
         }
         // check if we got any results at all
         if(data.pageInfo.totalResults < 1){
-            say("No song found FeelsBadMan");
+            say(config.no_song_found);
             return;
         }
 
@@ -87,7 +88,7 @@ function playSong(searchString){
                 say(err.stack.substring(0, 499));
                 return;
             }
-            say("Song added to play queue :D");
+            say(config.song_added_to_queue);
         });
     });
 }
