@@ -28,11 +28,13 @@ Only works on Windows. (changing the vlc execute line should make it work on lin
 
 5. Rename `secret.js.example` to `secret.js`. Put in your bots username, oauth and youtube api key
 
-6. Do this https://www.latecnosfera.com/2016/10/vlc-unable-to-open-mrl.html to fix VLC MRL load error (basically copy some text)
+6. Change the channel value in `config.js`
 
-7. Change the channel value in `config.js`
+7. Open VLC > Tools > Preferences. Under Interface, check "Allow only one instance" and "Enqueue items into playlist.." to make sure vlc doesn't open a new window every time a song is queued.
 
-8. Should be it. Start the bot `node bot.js`
+8. Do this https://www.latecnosfera.com/2016/10/vlc-unable-to-open-mrl.html to fix VLC MRL load error (basically copy some text)
+
+9. Should be it. Start the bot `node bot.js`
 
 ### Use on your own risk
 
