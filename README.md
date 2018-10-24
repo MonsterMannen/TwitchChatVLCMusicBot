@@ -1,29 +1,36 @@
 # TwitchChatVLCMusicBot
-Let users in twitch chat play music on stream. 
+Let users in twitch chat play music on stream with this simple twitch chat bot
 
-The bot searches youtube for a match and then plays it through VLC.
+The bot searches youtube for a match and then plays it through VLC
 
-Windows only.
+Only works on Windows. (changing the vlc execute line should make it work on linux instead)
+
+## Preview
 
 ![pic](https://i.imgur.com/gZg9CSN.gif)
 
-### Requirements
+## Use it yourself
+
+#### Requirements
 
 * VLC
 * A second twitch account
 
-### Use for yourself
+#### Follow all these steps
 
-Git clone the repo
+1. Git clone the repo and cd into dir
 
-npm install
+2. `npm install` to install needed npm packages
 
-Get your second twitch account (your bot) oauth from here https://twitchapps.com/tmi/
+3. Create a second twitch account (your bot) and get its oauth from here https://twitchapps.com/tmi/
 
-Create a youtube project and get an api_key for it here https://console.developers.google.com/apis/credentials?project=_
+4. Create a youtube project and get an api_key for it here https://console.developers.google.com/apis/credentials?project=_
 
-Put your twitch bots account name, oauth and api key in `secret.js.example` and rename it to `secret.js` 
+5. Rename `secret.js.example` to `secret.js`. Put in your bot accounts username, oauth and youtube api key
 
-Do this https://www.latecnosfera.com/2016/10/vlc-unable-to-open-mrl.html to fix VLC MRL load error
+6. Do this https://www.latecnosfera.com/2016/10/vlc-unable-to-open-mrl.html to fix VLC MRL load error (basically copy some text)
 
-brb fix this in 5 min
+7. Change the channel in `config.js`
+
+8. Should be it. Start the bot `node bot.js`
+
