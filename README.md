@@ -7,7 +7,7 @@ Only tested on Windows. Should work on Linux aswell.
 
 ## Preview
 
-![pic](https://i.imgur.com/gZg9CSN.gif)
+![pic](https://i.imgur.com/jKOKXuB.gif)
 
 ## Use it yourself
 
