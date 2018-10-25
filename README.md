@@ -27,24 +27,24 @@ Only tested on Windows. Should work on Linux aswell.
 4. Rename `secret.js.example` to `secret.js`. Put in your bots username, oauth and youtube api key
 5. Change the channel value in `config.js`
 
-##### VLC
+###### VLC
 
 6. Add VLC to your systems path variable. [how to guide](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
 7. Open VLC > Tools > Preferences. Under Interface, check "Allow only one instance" and "Enqueue items into playlist..".
 8. Follow this [short guide](https://www.latecnosfera.com/2016/10/vlc-unable-to-open-mrl.html) to fix VLC MRL load error
 
-##### Install and run
+###### Install and run
 
 9. `npm install` to install needed node modules
 10. Should be it. Start the bot `node bot.js`
 
-##### Test
+###### Test
 Test if it works by going to your twitch channel and type  
 `!play despacito` or  
 `!song despacito`  
 (your favorite song :^))
 
-### Use on your own risk
+## Use on your own risk
 
 Twitch chat
 
