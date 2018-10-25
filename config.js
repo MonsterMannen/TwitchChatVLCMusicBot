@@ -6,7 +6,6 @@ module.exports = {
     // messages the bot sends
     no_song_mentioned: "You forgot to name a song LUL",
     ear_rape_song_requested: "No ear rape - banned LUL LUL",
-    no_song_found: "No song found FeelsBadMan",
-    song_added_to_queue: "Song added to play queue :D"
+    no_song_found: "No song found FeelsBadMan"
 
 };

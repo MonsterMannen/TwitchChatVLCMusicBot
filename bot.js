@@ -76,10 +76,11 @@ function playSong(searchString){
             return;
         }
 
-        // get yt id
+        // get video id and title
+        var title = data.items[0].snippet.title;
         var id = data.items[0].id.videoId;
         var url = "https://www.youtube.com/watch?v=" + id;
-        var cmd = "start vlc " + url;
+        var cmd = "vlc --no-video " + url;
 
         // launch vlc
         child_process.exec(cmd, function(err, stdout, stderr){
@@ -88,7 +89,7 @@ function playSong(searchString){
                 say(err.stack.substring(0, 499));
                 return;
             }
-            say(config.song_added_to_queue);
+            say(`Song added: ${title}`);
         });
     });
 }
