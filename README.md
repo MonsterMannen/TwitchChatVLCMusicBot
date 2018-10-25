@@ -39,10 +39,10 @@ Only tested on Windows. Should work on Linux aswell.
 10. Should be it. Start the bot `node bot.js`
 
 ###### Test
-  Test if it works by going to your twitch channel and type  
-  `!play despacito` or  
-  `!song despacito`  
-  (your favourite song :^))
+11. Test if it works by going to your twitch channel and type  
+`!play despacito` or  
+`!song despacito`  
+(your favourite song :^))
 
 ## Use on your own risk
 
