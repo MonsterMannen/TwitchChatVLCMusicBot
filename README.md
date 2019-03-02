@@ -44,7 +44,7 @@ Only tested on Windows. Should work on Linux aswell.
 `!song despacito`  
 (your favourite song :^))
 
-## Use on your own risk
+## Use at your own risk
 
 Twitch chat
 
