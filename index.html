@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Add icon library -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <meta charset="UTF-8">
+        <title>TwitchChatVlc</title>
+        <style>
+            body {
+                background-color: #303442;
+            }
+
+            .d1 {
+                height: 50px;
+                width: 50px;
+            }
+
+            .buttons {
+                width: 50%;
+                margin: auto;
+            }
+
+            .button {
+                background-color: #4CAF50;
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="d1"></div>
+        <div class="buttons">
+            <button class="button">Start</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="button" id="settingsBtn" onClick="settingsBtnClick()"><i class="fa fa-gear"></i></button>
+        </div>
+
+        <script>
+            const ipc = require('electron').ipcRenderer;
+            function settingsBtnClick(){
+                ipc.send("open-settings");
+            }
+        </script>
+    </body>
+</html>
