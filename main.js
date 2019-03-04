@@ -5,7 +5,7 @@ const fs = require('fs');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
-let settingsWin = null;
+let settingsWin;
 var settings = {};
 
 function createWindow(){
@@ -35,6 +35,10 @@ ipc.on('save-click', (event, arg1, arg2, arg3, arg4) => {
     saveSettings(arg1, arg2, arg3, arg4);
 });
 
+ipc.on('start-click', (event) => {
+    console.log("start");
+});
+
 function openSettingsWindow(){
     settingsWin = new BrowserWindow({
         height: 500,
@@ -51,8 +55,12 @@ function openSettingsWindow(){
         e.preventDefault();
         require('electron').shell.openExternal(url);
     });
-    settingsWin.webContents.send('values', settings);
+    //settingsWin.webContents.send('settingValues', "test123");
 }
+
+settingsWin.once('ready-to-show', () => {
+    settingsWin.webContents.send('settingValues', "test123");
+});
 
 function saveSettings(channel, botName, botPw, ytKey){
     var data = {

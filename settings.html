@@ -47,18 +47,19 @@
         <script>
             const ipc = require('electron').ipcRenderer;
             function saveBtnClick(){
-
                 var channel = document.getElementById("channelName").value;
                 var botName = document.getElementById("botName").value;
                 var botPw = document.getElementById("botPw").value;
                 var ytKey = document.getElementById("ytKey").value;
 
                 ipc.send("save-click", channel, botName, botPw, ytKey);
-
-                ipc.on('values', function(event, settings){
-                    console.log(settings.channel);
-                });
             }
+
+            ipc.on('settingValues', function(event, settings){
+                console.log(settings);
+                document.getElementById("channelName").value = "sdasdsada";
+            });
+
         </script>
     </body>
 </html>

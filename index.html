@@ -37,7 +37,7 @@
     <body>
         <div class="d1"></div>
         <div class="buttons">
-            <button class="button">Start</button>
+            <button class="button" onClick="startBtnClick()">Start</button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="button" id="settingsBtn" onClick="settingsBtnClick()"><i class="fa fa-gear"></i></button>
         </div>
@@ -46,6 +46,10 @@
             const ipc = require('electron').ipcRenderer;
             function settingsBtnClick(){
                 ipc.send("open-settings");
+            }
+
+            function startBtnClick(){
+                ipc.send("start-click");
             }
         </script>
     </body>
