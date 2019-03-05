@@ -1,9 +1,9 @@
-# TwitchChatVLCMusicBot
+# TwitchChatVLCMusicBot (GUI beta version)
 A simple but useful bot that lets people in twitch chat queue up music for you.
 
 The bot searches youtube for a match and then plays it through VLC.
 
-Only tested on Windows. Should work on Linux aswell.
+Prebuilt for windows only.
 
 ## Preview
 
@@ -13,33 +13,24 @@ Only tested on Windows. Should work on Linux aswell.
 
 #### Requirements
 
-* node.js
 * VLC
 * A second twitch account
 
-#### Follow all these steps
+#### Follow these steps (takes 3-10 min)
 
-###### Setup bot
 
-1. Git clone or download all files
-2. Your second twitch account will be your bot. Get its oauth from here: [twitchapps](https://twitchapps.com/tmi/)
-3. Create a youtube project and get an api_key for it here: [google devs](https://console.developers.google.com/apis/credentials?project=_)
-4. Rename `secret.js.example` to `secret.js`. Put in your bots username, oauth and youtube api key
-5. Change the channel value in `config.js`
+1. Download the zip in [release-builds](https://github.com/MonsterMannen/TwitchChatVLCMusicBot/tree/electron-pkg/release-builds) and unpack it. Run the .exe file.  
+
 
 ###### VLC
 
-6. Add VLC to your systems path variable. [how to guide](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
-7. Open VLC > Tools > Preferences. Under Interface, check "Allow only one instance" and "Enqueue items into playlist..".
-8. Follow this [short guide](https://www.latecnosfera.com/2016/10/vlc-unable-to-open-mrl.html) to fix VLC MRL load error
+2. Add VLC to your systems path variable. [how to guide](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
+3. Open VLC > Tools > Preferences. Under Interface, check "Allow only one instance" and "Enqueue items into playlist..".
+4. Follow this [short guide](https://www.latecnosfera.com/2016/10/vlc-unable-to-open-mrl.html) to fix VLC MRL load error
 
-###### Install and run
-
-9. `npm install` to install needed node modules
-10. Should be it. Start the bot `node bot.js`
 
 ###### Test
-11. Test if it works by going to your twitch channel and type  
+5. Test if it works by going to your twitch channel and type  
 `!play despacito` or  
 `!song despacito`  
 (your favourite song :^))
