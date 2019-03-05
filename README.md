@@ -11,6 +11,8 @@ Only tested on Windows. Should work on Linux aswell.
 
 ## Use it yourself
 
+### [Beta GUI version, (easy to use), might be buggy](https://github.com/MonsterMannen/TwitchChatVLCMusicBot/tree/electron-pkg)
+
 #### Requirements
 
 * node.js
