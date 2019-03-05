@@ -1,54 +1,66 @@
 const TwitchBot = require('twitch-bot')
 const youtube = require('youtube-finder');
 const child_process = require('child_process');
-const secret = require('./secret.js');
-const config = require('./config.js');
 
 // channel to monitor
-var channel = config.channel;
+var channel = "";
 
-// twitch bot client
-const Bot = new TwitchBot({
-    username: secret.username,
-    oauth: secret.oauth,
-    channels: ["#"+channel]
-})
+var ytclient;
+var Bot;
 
-// youtube search client
-const ytclient = youtube.createClient({ key: secret.yt_key });
+module.exports = {
 
-// ##################################################################
+    setConfigAndCreateBot: function (c, botName, botPw, ytKey){
+        channel = c;
 
-Bot.on('join', channel => {
-    console.log("--> joined channel: " + channel);
-});
+        // twitch bot client
+        Bot = new TwitchBot({
+            username: botName,
+            oauth: botPw,
+            channels: ["#" + c]
+        })
 
-Bot.on('error', err => {
-    console.log("--> error: " + err);
-});
+        // youtube search client
+        ytclient = youtube.createClient({ key: ytKey });
 
-Bot.on('message', chatter => {
-    console.log(chatter.display_name + ": " + chatter.message);
+        Bot.on('join', channel => {
+            console.log("--> joined channel: " + channel);
+        });
 
-    if(chatter.message == "hoho") {
-        say("hehe");
+        Bot.on('error', err => {
+            console.log("--> error: Couldn't join that channel. Maybe wrong settings");
+        });
+
+        Bot.on('message', chatter => {
+            console.log(chatter.display_name + ": " + chatter.message);
+
+            if(chatter.message == "hoho") {
+                say("hehe");
+            }
+            else if(chatter.message.startsWith("!song")
+                                    || chatter.message.startsWith("!play")) {
+                if(chatter.message.length <= 6){
+                    say("No song mentioned. try !play songnamehere");
+                    return;
+                }
+                if(chatter.message.indexOf("rape") > -1){
+                    say("No ear rape songs :(");
+                    Bot.timeout(chatter.username, 10, "ear rape song");
+                    return;
+                }
+                playSong(chatter.message.substring(6));
+            }
+        });
+
+        Bot.join(channel);
+    },
+
+    dc: function (){
+        Bot.part(channel);
+        console.log("disconnected bot");
     }
-    else if(chatter.message.startsWith("!song")
-                            || chatter.message.startsWith("!play")) {
-        if(chatter.message.length <= 6){
-            say(config.no_song_mentioned);
-            return;
-        }
-        if(chatter.message.indexOf("rape") > -1){
-            say(config.ear_rape_song_requested);
-            Bot.timeout(chatter.username, 10, "ear rape song");
-            return;
-        }
-        playSong(chatter.message.substring(6));
-    }
-});
 
-Bot.join(channel);
+}
 
 // ##################################################################
 
@@ -72,7 +84,7 @@ function playSong(searchString){
         }
         // check if we got any results at all
         if(data.pageInfo.totalResults < 1){
-            say(config.no_song_found);
+            say("Song not found");
             return;
         }
 

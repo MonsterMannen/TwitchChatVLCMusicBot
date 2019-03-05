@@ -37,20 +37,43 @@
     <body>
         <div class="d1"></div>
         <div class="buttons">
-            <button class="button" onClick="startBtnClick()">Start</button>
+            <button class="button" id="startBtn" onClick="startBtnClick()">Start</button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="button" id="settingsBtn" onClick="settingsBtnClick()"><i class="fa fa-gear"></i></button>
         </div>
 
         <script>
             const ipc = require('electron').ipcRenderer;
+
             function settingsBtnClick(){
                 ipc.send("open-settings");
             }
 
             function startBtnClick(){
-                ipc.send("start-click");
+                var b = document.getElementById("startBtn");
+                if(b.innerText == "Start"){
+                    b.innerText = "Stop";
+                    b.style.background = "#F08080";
+                    ipc.send("start-click");
+                }else{
+                    b.innerText = "Start";
+                    b.style.background = "#4CAF50";
+                    ipc.send('stop-click');
+                }
             }
+
+            ipc.on('disable-start-btn', event => {
+                var b = document.getElementById("startBtn");
+                b.disabled = true;
+                b.style.background = "#cccccc";
+                console.log("disable btn");
+            });
+
+            ipc.on('enable-start-btn', event => {
+                var b = document.getElementById("startBtn");
+                b.disabled = false;
+                b.style.background = "#4CAF50";
+            });
         </script>
     </body>
 </html>

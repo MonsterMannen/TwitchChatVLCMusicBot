@@ -10,6 +10,9 @@
             input[type=text] {
                 width: 400px;
             }
+            #savedTxt {
+                visibility: hidden;
+            }
         </style>
     </head>
     <body>
@@ -27,7 +30,7 @@
             <br />
 
             <label>Bot OAuth</label>
-            <a href="https://twitchapps.com/tmi/" target="_blank">get it here</a>
+            <a href="https://twitchapps.com/tmi/" target="_blank">get it here (login with bot account)</a>
             <br />
             <input type="text" id="botPw" placeholder="ex: oauth:b90sdsajdsxxjsdhasjdgshhsssdsss">
             <br />
@@ -42,10 +45,13 @@
 
             <input type="submit" value="Save" onClick="saveBtnClick()">
 
+            <p id="savedTxt">Settings saved</p>
+
         </div>
 
         <script>
             const ipc = require('electron').ipcRenderer;
+
             function saveBtnClick(){
                 var channel = document.getElementById("channelName").value;
                 var botName = document.getElementById("botName").value;
@@ -53,11 +59,15 @@
                 var ytKey = document.getElementById("ytKey").value;
 
                 ipc.send("save-click", channel, botName, botPw, ytKey);
+
+                document.getElementById("savedTxt").style.visibility = "visible";
             }
 
-            ipc.on('settingValues', function(event, settings){
-                console.log(settings);
-                document.getElementById("channelName").value = "sdasdsada";
+            ipc.on('loadedData', function(event, settings){
+                document.getElementById("channelName").value = settings.channel;
+                document.getElementById("botName").value = settings.botName;
+                document.getElementById("botPw").value = settings.botPw;
+                document.getElementById("ytKey").value = settings.ytKey;
             });
 
         </script>
