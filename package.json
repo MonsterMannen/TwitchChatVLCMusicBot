@@ -1,5 +1,6 @@
 {
   "name": "TwitchChatVlc",
+  "productName": "TwitchChatVlc",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -10,8 +11,11 @@
   "author": "MonsterMannen",
   "license": "ISC",
   "dependencies": {
-    "electron": "^4.0.6",
+    "electron": "^4.0.7",
     "twitch-bot": "^1.2.5",
     "youtube-finder": "^1.0.1"
+  },
+  "devDependencies": {
+    "electron-packager": "^13.1.1"
   }
 }
