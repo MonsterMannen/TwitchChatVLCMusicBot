@@ -1,12 +1,13 @@
 const { app, BrowserWindow } = require('electron');
 const ipc = require('electron').ipcMain;
 const fs = require('fs');
-const bot = require('./bot.js');
+const Bot = require('./bot.js');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 let settingsWin;
+var bot;
 var settings = {
     channel: "",
     botName: "",
@@ -18,7 +19,7 @@ function createWindow(){
     // Create the browser window.
     win = new BrowserWindow({ width: 500, height: 300 });
     win.loadFile('index.html');
-    //win.setMenu(null);
+    win.setMenu(null);
 
     win.on('closed', () => {
         bot.dc();
@@ -60,7 +61,11 @@ ipc.on('save-click', (event, c, bname, bpw, ytk) => {
 
 ipc.on('start-click', (event) => {
     console.log("starting");
-    bot.setConfigAndCreateBot(settings.channel, settings.botName, settings.botPw, settings.ytKey);
+    try{
+        bot = new Bot(settings.channel, settings.botName, settings.botPw, settings.ytKey);
+    }catch(e){
+        console.log(e);
+    }
 });
 
 ipc.on('stop-click', (event) => {
@@ -112,7 +117,7 @@ function loadSettings(){
     var obj;
     fs.readFile('settings.json', 'utf8', (err, data) => {
         if(err){
-            console.log("settings file doesnt exist");
+            console.log("settings file doesnt exist");  // we create one later
             return;
         }
         obj = JSON.parse(data);
@@ -125,3 +130,9 @@ function loadSettings(){
         console.log("loaded settings: " + settings.channel);
     });
 }
+
+process.on('uncaughtException', (err) => {
+    if(err.message == "Wrong username or password"){
+        win.webContents.send('show-error');
+    }
+});

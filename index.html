@@ -32,6 +32,13 @@
                 margin: 4px 2px;
                 cursor: pointer;
             }
+
+            #errorP {
+                font-size: 20px;
+                color: red;
+                font-family: verdana;
+                visibility: hidden;
+            }
         </style>
     </head>
     <body>
@@ -40,6 +47,7 @@
             <button class="button" id="startBtn" onClick="startBtnClick()">Start</button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="button" id="settingsBtn" onClick="settingsBtnClick()"><i class="fa fa-gear"></i></button>
+            <p id="errorP">Error, wrong username or password</p>
         </div>
 
         <script>
@@ -59,8 +67,14 @@
                     b.innerText = "Start";
                     b.style.background = "#4CAF50";
                     ipc.send('stop-click');
+                    document.getElementById("errorP").style.visibility = "hidden";
                 }
             }
+
+            ipc.on('show-error', (event, errorMsg) => {
+                if(errorMsg) document.getElementById("errorP").innerText = errorMsg;
+                document.getElementById("errorP").style.visibility = "visible";
+            });
 
             ipc.on('disable-start-btn', event => {
                 var b = document.getElementById("startBtn");
