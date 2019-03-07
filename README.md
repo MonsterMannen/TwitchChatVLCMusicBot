@@ -1,8 +1,9 @@
-# TwitchChatVLCMusicBot (GUI beta version)
-A simple but useful bot that lets people in twitch chat queue up music for you.
+# Twitch Chat VLC
 
-The bot searches youtube for a match and then plays it through VLC.
+![img](https://raw.githubusercontent.com/MonsterMannen/TwitchChatVLCMusicBot/master/icon.ico)
 
+A simple but useful bot that lets people in twitch chat queue up music for you.  
+The bot searches youtube for a match and then plays it through VLC.  
 Prebuilt for windows only.
 
 ## Preview
@@ -10,8 +11,6 @@ Prebuilt for windows only.
 ![pic](https://i.imgur.com/jKOKXuB.gif)
 
 ## Use it yourself
-
-### [Beta GUI version, (easy to use), might be buggy](https://github.com/MonsterMannen/TwitchChatVLCMusicBot/tree/electron-pkg)
 
 #### Requirements
 
@@ -21,7 +20,7 @@ Prebuilt for windows only.
 #### Follow these steps (takes 3-10 min)
 
 
-1. Download the zip in [release-builds](https://github.com/MonsterMannen/TwitchChatVLCMusicBot/tree/electron-pkg/release-builds) and unpack it. Run the .exe file.  
+1. Download the zip in [release-builds](https://github.com/MonsterMannen/TwitchChatVLCMusicBot/release-builds) and unpack it. Run the .exe file.  
 
 
 ###### VLC
