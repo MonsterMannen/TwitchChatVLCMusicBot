@@ -20,7 +20,7 @@ Prebuilt for windows only.
 #### Follow these steps (takes 3-10 min)
 
 
-1. Download the zip in [release-builds](https://github.com/MonsterMannen/TwitchChatVLCMusicBot/release-builds) and unpack it. Run the .exe file.  
+1. Download the zip in [release-builds](https://github.com/MonsterMannen/TwitchChatVLCMusicBot/tree/master/release-builds) and unpack it. Run the .exe file.  
 
 
 ###### VLC
