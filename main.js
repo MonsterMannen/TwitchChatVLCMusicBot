@@ -32,7 +32,6 @@ function createWindow(){
             win.webContents.send('disable-start-btn');
         }
     });
-
 }
 
 app.on('ready', () => {
