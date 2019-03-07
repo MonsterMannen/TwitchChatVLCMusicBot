@@ -10,6 +10,8 @@ Prebuilt for windows only.
 
 ![pic](https://i.imgur.com/jKOKXuB.gif)
 
+![pic2](https://i.imgur.com/ImYT3Rw.png)
+
 ## Use it yourself
 
 #### Requirements
