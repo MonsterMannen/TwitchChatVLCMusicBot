@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            .d1 {
+                height: 30px;
+                width: 50px;
+            }
+            input[type=text] {
+                width: 400px;
+            }
+            #savedTxt {
+                visibility: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="d1"></div>
+        <div class="forms">
+
+            <label>Your channel</label><br />
+            <input type="text" id="channelName" placeholder="ex: monstermannen_">
+            <br />
+            <br />
+
+            <label>Bot accounts name</label><br />
+            <input type="text" id="botName" placeholder="ex: TriHardBot420">
+            <br />
+            <br />
+
+            <label>Bot OAuth</label>
+            <a href="https://twitchapps.com/tmi/" target="_blank">get it here (login with bot account)</a>
+            <br />
+            <input type="text" id="botPw" placeholder="ex: oauth:b90sdsajdsxxjsdhasjdgshhsssdsss">
+            <br />
+            <br />
+
+            <label>Youtube API key</label>
+            <a href="https://console.developers.google.com/apis/credentials?project=_" target="_blank">create a project and get api key here</a>
+            <br />
+            <input type="text" id="ytKey" placeholder="ex: AIDsdsSsdsadsaSSDassS-DSAdsa54asdS2S1sx">
+            <br />
+            <br />
+
+            <input type="submit" value="Save" onClick="saveBtnClick()">
+
+            <p id="savedTxt">Settings saved</p>
+
+        </div>
+
+        <script>
+            const ipc = require('electron').ipcRenderer;
+
+            function saveBtnClick(){
+                var channel = document.getElementById("channelName").value;
+                var botName = document.getElementById("botName").value;
+                var botPw = document.getElementById("botPw").value;
+                var ytKey = document.getElementById("ytKey").value;
+
+                ipc.send("save-click", channel, botName, botPw, ytKey);
+
+                document.getElementById("savedTxt").style.visibility = "visible";
+            }
+
+            ipc.on('loadedData', function(event, settings){
+                document.getElementById("channelName").value = settings.channel;
+                document.getElementById("botName").value = settings.botName;
+                document.getElementById("botPw").value = settings.botPw;
+                document.getElementById("ytKey").value = settings.ytKey;
+            });
+
+        </script>
+    </body>
+</html>

@@ -1,95 +1,101 @@
 const TwitchBot = require('twitch-bot')
 const youtube = require('youtube-finder');
 const child_process = require('child_process');
-const secret = require('./secret.js');
-const config = require('./config.js');
 
-// channel to monitor
-var channel = config.channel;
+class Bot {
+    constructor(channel, botName, botPw, ytKey){
+        this.channel = channel;
+        this.ytclient = youtube.createClient({ key: ytKey });
 
-// twitch bot client
-const Bot = new TwitchBot({
-    username: secret.username,
-    oauth: secret.oauth,
-    channels: ["#"+channel]
-})
+        this.TwitchBot = new TwitchBot({
+            username: botName,
+            oauth: botPw,
+            channels: ["#"+channel]
+        });
 
-// youtube search client
-const ytclient = youtube.createClient({ key: secret.yt_key });
+        this.TwitchBot.on('join', channel => {
+            console.log("--> joined channel: " + channel);
+        });
 
-// ##################################################################
+        this.TwitchBot.on('error', err => {
+            console.log("--> error: Couldn't join channel. Maybe wrong settings");
+            throw new Error("Wrong username or password");
+        });
 
-Bot.on('join', channel => {
-    console.log("--> joined channel: " + channel);
-});
+        this.TwitchBot.on('message', chatter => {
+            console.log(chatter.display_name + ": " + chatter.message);
 
-Bot.on('error', err => {
-    console.log("--> error: " + err);
-});
+            if(chatter.message == "hoho") {
+                this.say("hoho");
+            }
+            else if(chatter.message.startsWith("!song")
+                                    || chatter.message.startsWith("!play")) {
+                if(chatter.message.split(" ").length < 2){
+                    this.say("No song mentioned. try !play songnamehere");
+                    return;
+                }
+                if(chatter.message.indexOf("rape") > -1){
+                    this.say("No ear rape songs :(");
+                    this.TwitchBot.timeout(chatter.username, 10, "ear rape song");
+                    return;
+                }
 
-Bot.on('message', chatter => {
-    console.log(chatter.display_name + ": " + chatter.message);
+                var search = chatter.message.split(" ");
+                search.shift();
+                this.playSong(search.join(" "), this);
+            }
+        });
 
-    if(chatter.message == "hoho") {
-        say("hehe");
+        this.TwitchBot.join(channel);
     }
-    else if(chatter.message.startsWith("!song")
-                            || chatter.message.startsWith("!play")) {
-        if(chatter.message.length <= 6){
-            say(config.no_song_mentioned);
-            return;
-        }
-        if(chatter.message.indexOf("rape") > -1){
-            say(config.ear_rape_song_requested);
-            Bot.timeout(chatter.username, 10, "ear rape song");
-            return;
-        }
-        playSong(chatter.message.substring(6));
+
+    dc(){
+        this.TwitchBot.part(this.channel);
+        console.log("disconnected from twitch");
     }
-});
 
-Bot.join(channel);
+    say(msg){
+        this.TwitchBot.say(msg, "#"+this.channel);
+    }
 
-// ##################################################################
-
-// send bot message in chat
-function say(msg){
-    Bot.say(msg, "#"+channel);
-}
-
-function playSong(searchString){
-    // get video id from search string
-    ytclient.search({
-        part: "snippet",
-        q: searchString,
-        maxResults: 1,
-        type: "video"
-    }, function(err, data){
-        // check for error
-        if(err){
-            say("Fail FeelsBadMan " + err);
-            return;
-        }
-        // check if we got any results at all
-        if(data.pageInfo.totalResults < 1){
-            say(config.no_song_found);
-            return;
-        }
-
-        // get video id and title
-        var title = data.items[0].snippet.title;
-        var id = data.items[0].id.videoId;
-        var url = "https://www.youtube.com/watch?v=" + id;
-        var cmd = "vlc --no-video " + url;
-
-        // launch vlc
-        child_process.exec(cmd, function(err, stdout, stderr){
+    // need to pass self ref for some reason
+    playSong(searchString, ref){
+        // get video id from search string
+        this.ytclient.search({
+            part: "snippet",
+            q: searchString,
+            maxResults: 1,
+            type: "video"
+        }, function(err, data){
+            // check for error
             if(err){
-                console.log(err.stack);
-                say(err.stack.substring(0, 499));
+                ref.say("Fail FeelsBadMan " + err + " (Probably wrong youtube api key)");
                 return;
             }
-            say(`Song added: ${title}`);
+            // check if we got any results at all
+            if(data.pageInfo.totalResults < 1){
+                //this.say("Song not found");
+                ref.say("Song not found");
+                return;
+            }
+
+            // get video id and title
+            var title = data.items[0].snippet.title;
+            var id = data.items[0].id.videoId;
+            var url = "https://www.youtube.com/watch?v=" + id;
+            var cmd = "vlc --no-video " + url;
+
+            // launch vlc
+            child_process.exec(cmd, function(err, stdout, stderr){
+                if(err){
+                    console.log(err.stack);
+                    ref.say(err.stack.substring(0, 499));
+                    return;
+                }
+                ref.say(`Song added: ${title}`);
+            });
         });
-    });
+    }
 }
+
+module.exports = Bot;
